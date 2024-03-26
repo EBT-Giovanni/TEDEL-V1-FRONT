@@ -19,7 +19,7 @@ const CajasActivas = () => {
         placa: "",
         tractorName: "",
         placaTractor: "",
-    
+        rel_cliente: "",
     });
 
     // ===============================================
@@ -37,6 +37,8 @@ const CajasActivas = () => {
         buscarCatalogoCajas();
 
         buscarCatalogoTractores();
+
+        buscarCatalogoClientes();
 
     }, [token]);
 
@@ -69,7 +71,11 @@ const CajasActivas = () => {
     // ===============================================
 
     const columns = [
-
+        {
+            name: 'Cliente',
+            selector: row => row.nombre_comercial,
+            sortable: true
+        },
         {
             name: 'Termo',
             selector: row => row.vehicleName,
@@ -123,7 +129,12 @@ const CajasActivas = () => {
 
     }
     const handleChange2 = (rowData) => {
-        setFormValues({ ...formValues, ["tractorName"]: rowData.numero_economico, ["placaTractor"]: rowData.placa });
+        setFormValues({ ...formValues, ["tractorName"]: rowData.numero_economico, ["placaTractor"]: rowData.placa});
+    };
+    const handleChange3 = (event) => {
+        const val = event.target.value;
+        const name = event.target.name;
+        setFormValues({ ...formValues, [name]: val });
     };
     // ===============================================
     // VALIDAR SI YA ESTA ACTIVA LA CAJA
@@ -294,11 +305,42 @@ const CajasActivas = () => {
     
     };
 
+    const [catClientes, setClientes] = useState([])
+    const buscarCatalogoClientes = () => {
+
+        setToken(Cookies.get('jwtoken'));
+        
+        axios.get(`${baseURL}api/clientes`,{
+        
+            method: "GET",
+            headers: {"access-token": token}
+        
+        })
+        .then(result => {
+    
+            if(result.data.success == true)
+            {
+                let des = result.data.result;
+
+                des.unshift({id: "", nombre_comercial: "Seleccione Cliente"});
+        
+                setClientes(des);
+            }
+    
+        })
+        .catch(error => {
+        
+            console.log(error)
+        
+        })
+    
+    };
+
     return (
 
         <div>
 
-            <h3 className='mb-4'>Cajas Activas SK</h3>
+            <h3 className='mb-4'>Cajas Activas</h3>
 
             <button
                 type='button'
@@ -317,10 +359,12 @@ const CajasActivas = () => {
             <ModalAgregarCajaActiva
                 onChange={handleChange}
                 onChange2={handleChange2}
+                onChange3={handleChange3}
                 data = {formValues}
                 refresh={buscarCajas}
                 catCajas={catCajas}
                 catTractores={catTractores}
+                catClientes={catClientes}
             />
 
         </div>

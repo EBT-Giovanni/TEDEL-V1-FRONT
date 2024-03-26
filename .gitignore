@@ -4,3 +4,4 @@
 # Archivos de compilación
 /build
 build.zip
+.vscode/settings.json

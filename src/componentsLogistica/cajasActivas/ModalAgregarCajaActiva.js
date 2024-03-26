@@ -204,6 +204,24 @@ const ModalAgregarCajaActiva = (props) => {
 
                                 </div>
 
+                                <div className='col-6 mb-3'>
+
+                                    <span className="badge text-bg-secondary mb-2">Cliente:</span>
+
+                                    <select
+                                        key="rel_cliente"
+                                        name="rel_cliente"
+                                        id="selectAgregarCliente"
+                                        className="form-select"
+                                        onChange={props.onChange3}>
+                                        {props.catClientes.map((op) => (
+                                            <option key={op.id} value={op.id}>{op.nombre_comercial}</option>
+                                        ))}
+                                        
+                                    </select>
+
+                                </div>
+
                             </div>
                         </div>
 
