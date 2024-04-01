@@ -16,6 +16,7 @@ import {IoMdPersonAdd} from 'react-icons/io';
 import {BsPencil} from 'react-icons/bs';
 import {RiDeleteBinFill} from 'react-icons/ri';
 import {HiOutlineEye} from 'react-icons/hi';
+import ReporteClientes from '../components/clientes/ReporteClientes';
 
 
 const Clientes = () => {
@@ -293,6 +294,8 @@ const Clientes = () => {
                 data-bs-target="#modalCrearCliente">
                 <IoMdPersonAdd/> Agregar Cliente
             </button>
+
+            <ReporteClientes clientes={data} />
 
             {/* TABLA PARA MOSTRAR CLIENTES */}
 
