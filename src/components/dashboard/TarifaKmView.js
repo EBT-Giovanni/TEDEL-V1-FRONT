@@ -38,11 +38,14 @@ const TarifaKmView = () => {
         const start = primerDiaMes.toISOString().slice(0, 10);
         const end = ultimoDiaMes.toISOString().slice(0, 10);
 
-        buscarTotalTarifa(start, end, token);
+        // OBTENEMOS EL IMPO EXPO
+        const impoExpo = document.getElementById('selectImpoExpo').value;
 
-        buscarTotalkm(start, end, token);
+        buscarTotalTarifa(start, end, token, impoExpo);
 
-        buscarTotalTractores(start, end, token);
+        buscarTotalkm(start, end, token, impoExpo);
+
+        buscarTotalTractores(start, end, token, impoExpo);
 
     },[]);
 
@@ -60,9 +63,11 @@ const TarifaKmView = () => {
 
         const endVal = document.getElementById('fechaTotalTractoresEnd').value;
 
+        const impoExpo = document.getElementById('selectImpoExpo').value;
+
         if(startVal !== '' && endVal !== ''){
 
-            buscarTotalTractores(startVal, endVal, token);
+            buscarTotalTractores(startVal, endVal, token, impoExpo);
 
         }
 
@@ -76,11 +81,11 @@ const TarifaKmView = () => {
 
     const [dataTractor, setDataTractor] = useState([]);
 
-    const buscarTotalTractores = async (start, end, token) => {
+    const buscarTotalTractores = async (start, end, token, impoExpo) => {
 
-        buscarTotalTarifa(start, end, token);
+        buscarTotalTarifa(start, end, token, impoExpo);
 
-        buscarTotalkm(start, end, token);
+        buscarTotalkm(start, end, token, impoExpo);
 
         const config = {
   
@@ -91,13 +96,16 @@ const TarifaKmView = () => {
         const data = {
 
             start: start,
-            end: end
+            end: end,
+            impoExpo: impoExpo
 
         }
 
         const response = await axios.post(`${baseURL}api/get/tarifa/km/tractor`, data, config);console.log(response)
 
         if(response.data.success === true && response.data.result !== "Sin resultados"){
+
+            console.log(response.data.result)
 
             setDataTractor(response.data.result);
 
@@ -114,12 +122,27 @@ const TarifaKmView = () => {
     const [totalkmTractor, setTotalkmTractor] = useState([]);
     const [totalTarifaTractor, setTotalTarifaTractor] = useState([]);
 
+    const [totalImportacion, setTotalImportacion] = useState(0);
+    const [totalExportacion, setTotalExportacion] = useState(0);
+
     const separarDatosTractor = (data) => {
 
         let totalTarifa = [];
         let totalkm = [];
 
+        let totalImpo = 0;
+        let totalExpo = 0;
+
+        let cardTarifa = 0;
+        let cardKm = 0;
+
         for(let i=0; i < data.length; i++){
+
+            cardTarifa += data[i]["total"];
+            cardKm     += data[i]["km"];
+
+            totalImpo += data[i]["total_importaciones"];
+            totalExpo += data[i]["total_exportaciones"];
 
             // ARMAMOS EL JSON PARA TARIFA
 
@@ -143,8 +166,16 @@ const TarifaKmView = () => {
 
 
 
+        cardTarifa = cardTarifa.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        setTotalTarifa(cardTarifa);
+
+        setTotalkm(cardKm);
+
         setTotalTarifaTractor(totalTarifa);
         setTotalkmTractor(totalkm);
+
+        setTotalExportacion(totalExpo);
+        setTotalImportacion(totalImpo);
 
     }
 
@@ -154,28 +185,31 @@ const TarifaKmView = () => {
 
     const [totalkm, setTotalkm] = useState(0);
 
-    const buscarTotalkm = async (start, end, token) => {
+    const buscarTotalkm = async (start, end, token, impoExpo) => {
         
-        const config = {
+        // const config = {
   
-            headers: {"access-token": token},
+        //     headers: {"access-token": token},
     
-        };
+        // };
 
-        const data = {
+        // const data = {
 
-            start: start,
-            end: end
+        //     start: start,
+        //     end: end,
+        //     impoExpo: impoExpo
 
-        }
+        // }
 
-        const response = await axios.post(`${baseURL}api/get/km/mes`, data, config);
+        // const response = await axios.post(`${baseURL}api/get/km/mes`, data, config);
 
-        if(response.data.success === true && response.data.result !== "Sin resultados"){
+        // if(response.data.success === true && response.data.result !== "Sin resultados"){
 
-            setTotalkm(response.data.result[0]["km"])
+        //     console.log(response.data.result[0]["km"])
 
-        }
+        //     setTotalkm(response.data.result[0]["km"])
+
+        // }
 
     }
 
@@ -185,34 +219,35 @@ const TarifaKmView = () => {
 
     const [totalTarifa, setTotalTarifa] = useState(0);
 
-    const buscarTotalTarifa = async (start, end, token) => {
+    const buscarTotalTarifa = async (start, end, token, impoExpo) => {
 
-        const config = {
+        // const config = {
   
-            headers: {"access-token": token},
+        //     headers: {"access-token": token},
     
-        };
+        // };
 
-        const data = {
+        // const data = {
 
-            start: start,
-            end: end
+        //     start: start,
+        //     end: end,
+        //     impoExpo: impoExpo
 
-        }
+        // }
 
-        const response = await axios.post(`${baseURL}api/get/tarifa/mes`, data, config);console.log(response)
+        // const response = await axios.post(`${baseURL}api/get/tarifa/mes`, data, config);console.log(response.data.result)
 
-        if(response.data.success === true && response.data.result !== "Sin resultados"){
+        // if(response.data.success === true && response.data.result !== "Sin resultados"){
 
-            //let total = ;
+        //     //let total = ;
 
-            let total = response.data.result[0]["total"];
+        //     let total = response.data.result[0]["total"];
 
-            total = total.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        //     total = total.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
-            setTotalTarifa(total)
+        //     setTotalTarifa(total)
 
-        }
+        // }
 
     }
 
@@ -222,7 +257,7 @@ const TarifaKmView = () => {
 
             {/* FECHA INICIAL */}
 
-            <div className='col-6 mb-4'>
+            <div className='col-4 mb-4'>
                 <label 
                     htmlFor="fechaTotalTractoresStart" 
                     className="form-label"
@@ -240,7 +275,7 @@ const TarifaKmView = () => {
 
             {/* FECHA FINAL */}
 
-            <div className='col-6 mb-4'>
+            <div className='col-4 mb-4'>
                 <label 
                     htmlFor="fechaTotalTractoresEnd" 
                     className="form-label" 
@@ -254,6 +289,47 @@ const TarifaKmView = () => {
                     name="end"
                     onChange={handleChange}
                 />
+            </div>
+
+            {/* IMPORTACION EXPORTACION */}
+
+            <div className='col-4 mb-4'>
+                <label 
+                    htmlFor="selectImpoExpo" 
+                    className="form-label" 
+                >
+                    Importacion / Exportacion
+                </label>
+
+                <select 
+                    className="form-select" 
+                    name="selectImpoExpo" 
+                    id="selectImpoExpo"
+                    onChange={handleChange}
+                >
+                    <option value="todos">Todos</option>
+                    <option value="Bajada">Importacion</option>
+                    <option value="Subida">Exportacion</option>
+                </select>
+
+            </div>
+
+            {/* TOTALES IMPOS Y EXPOS */}
+
+            <div className='col-6'>
+
+                <div class="alert alert-info text-center" role="alert">
+                    Importaciones: <b>{totalImportacion}</b>
+                </div>
+
+            </div>
+
+            <div className='col-6'>
+
+                <div class="alert alert-info text-center" role="alert">
+                    Exportaciones: <b>{totalExportacion}</b>
+                </div>
+
             </div>
 
             {/* RESUMEN TOTAL POR TARIFA */}
@@ -304,7 +380,7 @@ const TarifaKmView = () => {
                         {
                             dataTractor.map((op) => (
 
-                                <li className="list-group-item" key={op.tractor}>{op.tractor}: <b>Ingreso -</b> $ {op.total} | <b>Km</b> - {op.km} km</li>
+                                <li className="list-group-item" key={op.tractor}>{op.tractor}: <b>Ingreso -</b> $ {op.total} | <b>Km</b> - {op.km} km | <b>Importaciones -</b> {op.total_importaciones} | <b>Exportaciones -</b> {op.total_exportaciones} </li>
 
                             ))
                         }

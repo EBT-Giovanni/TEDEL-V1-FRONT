@@ -190,8 +190,6 @@ const CajasActivas = () => {
 
         const tokeen = Cookies.get('jwtoken');
 
-        console.log(id)
-
         Swal.fire({
             title: 'Estas seguro de borrar esta caja?',
             text: "Esta accion no podra ser revertida!",
@@ -203,12 +201,16 @@ const CajasActivas = () => {
           }).then((result) => {
             if (result.isConfirmed) {
 
+                console.log(1)
+
               axios.delete(`${baseURL}api/delete/termo/${id}`,{
         
                 headers: {"access-token": tokeen}
             
               })
-              .then(result => {console.log(result)
+              .then(result => {
+
+                console.log(2)
           
                 if(result.data.success == true)
                 {
@@ -231,6 +233,8 @@ const CajasActivas = () => {
                 console.log(error)
             
               })
+
+              console.log(3)
       
             }
             
