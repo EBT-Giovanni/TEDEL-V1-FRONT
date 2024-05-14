@@ -17,27 +17,43 @@ function CrearOrden(props) {
 
         event.preventDefault();
 
-        console.log(props.data)
-
         const token = Cookies.get('jwtoken');
 
         let validar = true;
+
+        console.log(props.data)
 
         Object.entries(props.data).forEach(entry => {
 
             const [key,value] = entry;
     
             if(value === "" || value === null){
-              
-              Swal.fire({
-                icon: 'warning',
-                title: 'No pueden ir campos vacios!',
-              })
 
-              validar = false;
+                if(
+                    props.data.cruce_impo_expo === '' || 
+                    props.data.cruce_impo_expo === 'N/A' || 
+                    props.data.cruce_impo_expo === null &&
+                    key === 'cruce_impo_expo' ||
+                    key === 'cruce_monto' ||
+                    key === 'cruce_origen' ||
+                    key === 'cruce_destino'
+                ){
+
+                    console.log('ok')
+
+                }else{
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No pueden ir campos vacios!',
+                    })
     
-              return;
-    
+                    validar = false;
+            
+                    return;
+
+                }
+                
             }
     
         });
@@ -104,6 +120,10 @@ function CrearOrden(props) {
         document.getElementById("horaRecoleccionCrearOrden").value = "";
         document.getElementById("fechaEntregaCrearOrden").value = "";
         document.getElementById("horaEntregaCrearOrden").value = "";
+        document.getElementById("cruce_impo_expoSelect").value = "";
+        document.getElementById("cruce_montoInput").value = "";
+        document.getElementById("cruce_origenInput").value = "";
+        document.getElementById("cruce_destinoInput").value = "";
 
     }
 
@@ -482,6 +502,83 @@ function CrearOrden(props) {
                                             id="horaEntregaCrearOrden"
                                             name="hora_entrega"
                                             placeholder="Ingrese hora"
+                                            onChange={props.onChange}
+                                        />
+
+                                    </div>
+
+                                    {/* -/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/--/-/-/-/-/-/-/-/-/- */}
+
+                                    {/* CRUCE IMPO EXPO */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Tipo Cruce:</span>
+
+                                        <select
+                                            name="cruce_impo_expo"
+                                            className="form-select"
+                                            id="cruce_impo_expoSelect"
+                                            onChange={props.onChange}>
+
+                                            <option value="">Seleccione una opcion</option>
+                                            <option value="N/A">Sin Cruce</option>
+                                            <option value="Importacion">Importacion</option>
+                                            <option value="Exportacion">Exportacion</option>
+                                            
+                                        </select>
+
+                                    </div>
+
+                                    {/* CRUCE MONTO */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Cruce Monto:</span>
+
+                                        <input
+                                            className='form-control'
+                                            type="number"
+                                            name="cruce_monto"
+                                            id="cruce_montoInput"
+                                            placeholder="Ingrese monto del Cruce"
+                                            autoComplete = "off"
+                                            onChange={props.onChange}
+                                        />
+
+                                    </div>
+
+                                    {/* CRUCE ORIGEN */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Cruce Origen:</span>
+
+                                        <input
+                                            className='form-control'
+                                            type="text"
+                                            name="cruce_origen"
+                                            id="cruce_origenInput"
+                                            placeholder="Ingrese Origen del Cruce"
+                                            autoComplete = "off"
+                                            onChange={props.onChange}
+                                        />
+
+                                    </div>
+
+                                    {/* CRUCE DESTINO */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Cruce Destino:</span>
+
+                                        <input
+                                            className='form-control'
+                                            type="text"
+                                            name="cruce_destino"
+                                            id="cruce_destinoInput"
+                                            placeholder="Ingrese Destino del Cruce"
+                                            autoComplete = "off"
                                             onChange={props.onChange}
                                         />
 

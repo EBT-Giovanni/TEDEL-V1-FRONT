@@ -48,7 +48,11 @@ const OrdenesLogistica = () => {
         tarifa: "",
         factura_microsip: "",
         refactura: "",
-        orden_mcleod: ""
+        orden_mcleod: "",
+        cruce_impo_expo: "",
+        cruce_monto: "",
+        cruce_origen: "",
+        cruce_destino: ""
     
     });
 
@@ -305,6 +309,8 @@ const OrdenesLogistica = () => {
 
                 let temp = result.data.result[0];
 
+                console.log(temp)
+
                 const isoDate = temp["fecha_recoleccion"];
 
                 // Convertir el string ISO 8601 a un objeto Date
@@ -331,6 +337,9 @@ const OrdenesLogistica = () => {
                 document.getElementById("cajaOrdenLEdit").value = temp["rel_caja"];
                 document.getElementById("proveedorOrdenLEdit").value = temp["rel_proveedor"];
                 document.getElementById("monedaEditOrdenL").value = temp["moneda"];
+                document.getElementById("editCruce_impo_expoSelectL").value = temp["cruce_impo_expo"];
+
+                
                 
                 setFormValues(temp);
 
@@ -649,7 +658,40 @@ const OrdenesLogistica = () => {
                     type='button'
                     className='btn btn-primary col-2'
                     data-bs-toggle="modal" 
-                    data-bs-target="#modalCrearOrdenLogistica">
+                    data-bs-target="#modalCrearOrdenLogistica"
+                    onClick={() => {
+
+                        setFormValues({
+                            rel_cliente: "",
+                            rel_proveedor: "",
+                            rel_ruta: "",
+                            impo_expo: "",
+                            referencia: "",
+                            rel_caja: "",
+                            fecha_recoleccion: "",
+                            hora_recoleccion: "",
+                            fecha_entrega: "",
+                            hora_entrega: "",
+                            temperatura_1: "",
+                            temperatura_2: "",
+                            bol: "",
+                            commodity: "",
+                            peso: "",
+                            pallets: "",
+                            cases: "",
+                            moneda: "",
+                            tarifa: "",
+                            factura_microsip: "",
+                            refactura: "",
+                            orden_mcleod: "",
+                            cruce_impo_expo: "",
+                            cruce_monto: "",
+                            cruce_origen: "",
+                            cruce_destino: ""
+                        })
+
+                    }}
+                >
                         <MdOutlineAddCircle/> Agregar Orden
                 </button>
 

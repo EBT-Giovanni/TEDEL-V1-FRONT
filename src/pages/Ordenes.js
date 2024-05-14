@@ -326,7 +326,11 @@ const Ordenes = () => {
         peso: "20000",
         pallets: "",
         cases: "",
-        rel_estatus: "2"
+        rel_estatus: "2",
+        cruce_impo_expo: "",
+        cruce_monto: "",
+        cruce_origen: "",
+        cruce_destino: ""
     });
 
     //FUNCION PARA ACTUALIZAR FORM DATA
@@ -466,6 +470,8 @@ const Ordenes = () => {
 
         const response = await axios.get(`${baseURL}api/orden/${id}`, config);
 
+        console.log(response.data.result[0])
+
         if(response.data.success === true && response.data.result !== "Sin resultados"){
 
             let temp = response.data.result[0];
@@ -491,6 +497,8 @@ const Ordenes = () => {
             document.getElementById("selectCajaEditOrden").value = temp["rel_caja"];
     
             document.getElementById("subidaBajadaSelect").value = temp["subida_bajada"];
+
+            document.getElementById("editCruce_impo_expoSelect").value = temp["cruce_impo_expo"];
 
             setTimeout(function() {setVal(temp["rel_ruta"])}, 1000);
 
@@ -717,7 +725,34 @@ const Ordenes = () => {
             <button 
                 type="button" 
                 className="btn btn-primary" 
-                //onClick={validarModal}
+                onClick={() => {
+                    setFormValuesOrden({
+                        rel_estatus_orden: "1",
+                        rel_cliente: "",
+                        rel_ruta: "",
+                        rel_zona_origen: "",
+                        rel_zona_destino: "",
+                        rel_mv: "0",
+                        subida_bajada: "",
+                        referencia: "",
+                        rel_caja: "",
+                        fecha_recoleccion: "",
+                        hora_recoleccion: "",
+                        fecha_entrega: "",
+                        hora_entrega: "",
+                        temperatura_1: "",
+                        temperatura_2: "",
+                        commodity: "",
+                        peso: "20000",
+                        pallets: "",
+                        cases: "",
+                        rel_estatus: "2",
+                        cruce_impo_expo: "",
+                        cruce_monto: "",
+                        cruce_origen: "",
+                        cruce_destino: ""
+                    })
+                }}
                 data-bs-toggle="modal" 
                 data-bs-target="#modalCrearOrden"
             >

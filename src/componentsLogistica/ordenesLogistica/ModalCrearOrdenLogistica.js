@@ -30,18 +30,36 @@ const ModalCrearOrdenLogistica = (props) => {
     
             if(value === "" || value === null){
 
-                if(key !== 'orden_mcleod'){
+                if(
+                    props.data.cruce_impo_expo === '' || 
+                    props.data.cruce_impo_expo === 'N/A' || 
+                    props.data.cruce_impo_expo === null &&
+                    key === 'cruce_impo_expo' ||
+                    key === 'cruce_monto' ||
+                    key === 'cruce_origen' ||
+                    key === 'cruce_destino'
+                ){
 
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'No pueden ir campos vacios!',
-                    })
-    
-                    validar = false;
+                    console.log('ok')
+
+                }else{
+
+                    if(key !== 'orden_mcleod'){
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'No pueden ir campos vacios!',
+                        })
         
-                    return;
+                        validar = false;
+            
+                        return;
+    
+                    }
 
                 }
+
+                
     
             }
     
@@ -112,6 +130,11 @@ const ModalCrearOrdenLogistica = (props) => {
         document.getElementById("bolOrdenL").value = "";
         document.getElementById("facturaOrdenL").value = "";
         document.getElementById("orden_mcleodL").value = "";
+
+        document.getElementById("cruce_impo_expoSelectL").value = "";
+        document.getElementById("cruce_montoInputL").value = "";
+        document.getElementById("cruce_origenInputL").value = "";
+        document.getElementById("cruce_destinoInputL").value = "";
 
     }
 
@@ -555,6 +578,81 @@ const ModalCrearOrdenLogistica = (props) => {
                                                 autoComplete = "off"
                                                 onChange={props.onChange}
                                             />
+
+                                            </div>
+
+                                            {/* CRUCE IMPO EXPO */}
+
+                                            <div className='col-6 mt-4'>
+
+                                                <span className="badge text-bg-secondary mb-2">Tipo Cruce:</span>
+
+                                                <select
+                                                    name="cruce_impo_expo"
+                                                    className="form-select"
+                                                    id="cruce_impo_expoSelectL"
+                                                    onChange={props.onChange}>
+
+                                                    <option value="">Seleccione una opcion</option>
+                                                    <option value="N/A">Sin Cruce</option>
+                                                    <option value="Importacion">Importacion</option>
+                                                    <option value="Exportacion">Exportacion</option>
+                                                    
+                                                </select>
+
+                                            </div>
+
+                                            {/* CRUCE ORIGEN */}
+
+                                            <div className='col-6 mt-4'>
+
+                                                <span className="badge text-bg-secondary mb-2">Cruce Origen:</span>
+
+                                                <input
+                                                    className='form-control'
+                                                    type="text"
+                                                    name="cruce_origen"
+                                                    id="cruce_origenInputL"
+                                                    placeholder="Ingrese Origen del Cruce"
+                                                    autoComplete = "off"
+                                                    onChange={props.onChange}
+                                                />
+
+                                            </div>
+
+                                            {/* CRUCE DESTINO */}
+
+                                            <div className='col-6 mt-4'>
+
+                                                <span className="badge text-bg-secondary mb-2">Cruce Destino:</span>
+
+                                                <input
+                                                    className='form-control'
+                                                    type="text"
+                                                    name="cruce_destino"
+                                                    id="cruce_destinoInputL"
+                                                    placeholder="Ingrese Destino del Cruce"
+                                                    autoComplete = "off"
+                                                    onChange={props.onChange}
+                                                />
+
+                                            </div>
+
+                                            {/* CRUCE MONTO */}
+
+                                            <div className='col-6 mt-4'>
+
+                                                <span className="badge text-bg-secondary mb-2">Cruce Monto:</span>
+
+                                                <input
+                                                    className='form-control'
+                                                    type="number"
+                                                    name="cruce_monto"
+                                                    id="cruce_montoInputL"
+                                                    placeholder="Ingrese monto del Cruce"
+                                                    autoComplete = "off"
+                                                    onChange={props.onChange}
+                                                />
 
                                             </div>
 

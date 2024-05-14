@@ -493,6 +493,93 @@ function EditarOrden(props) {
 
                                     </div>
 
+
+
+
+
+
+
+
+
+
+                                    {/* CRUCE IMPO EXPO */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Tipo Cruce:</span>
+
+                                        <select
+                                            name="cruce_impo_expo"
+                                            className="form-select"
+                                            id="editCruce_impo_expoSelect"
+                                            onChange={props.onChange}>
+
+                                            <option value="">Seleccione una opcion</option>
+                                            <option value="N/A">Sin Cruce</option>
+                                            <option value="Importacion">Importacion</option>
+                                            <option value="Exportacion">Exportacion</option>
+                                            
+                                        </select>
+
+                                    </div>
+
+                                    {/* CRUCE MONTO */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Cruce Monto:</span>
+
+                                        <input
+                                            className='form-control'
+                                            defaultValue={props.data["cruce_monto"]}
+                                            type="number"
+                                            name="cruce_monto"
+                                            id="editCruce_montoInput"
+                                            placeholder="Ingrese monto del Cruce"
+                                            autoComplete = "off"
+                                            onChange={props.onChange}
+                                        />
+
+                                    </div>
+
+                                    {/* CRUCE ORIGEN */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Cruce Origen:</span>
+
+                                        <input
+                                            className='form-control'
+                                            type="text"
+                                            defaultValue={props.data["cruce_origen"]}
+                                            name="cruce_origen"
+                                            id="editCruce_origenInput"
+                                            placeholder="Ingrese Origen del Cruce"
+                                            autoComplete = "off"
+                                            onChange={props.onChange}
+                                        />
+
+                                    </div>
+
+                                    {/* CRUCE DESTINO */}
+
+                                    <div className='col-6 mt-4'>
+
+                                        <span className="badge text-bg-secondary mb-2">Cruce Destino:</span>
+
+                                        <input
+                                            className='form-control'
+                                            type="text"
+                                            defaultValue={props.data["cruce_destino"]}
+                                            name="cruce_destino"
+                                            id="editCruce_destinoInput"
+                                            placeholder="Ingrese Destino del Cruce"
+                                            autoComplete = "off"
+                                            onChange={props.onChange}
+                                        />
+
+                                    </div>
+
                                 </div>
 
                             </div>
